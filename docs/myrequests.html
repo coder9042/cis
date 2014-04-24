@@ -1,0 +1,284 @@
+<html>
+	<head>
+		<title>
+			CIS : User Requests
+		</title>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style2.css" type="text/css" />
+		<script language="javascript" src="{{STATIC_URL}}js/menu.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ddsmoothmenu.js"></script>
+		
+		<script type="text/javascript">
+			ddsmoothmenu.init({
+			mainmenuid: "templatemo_menu", //menu DIV id
+			orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+			classname: 'ddsmoothmenu', //class added to menu's outer DIV
+			//customtheme: ["#1c5a80", "#18374a"],
+			contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+			})
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+        
+        $("#carousel").dualSlider({
+            auto:true,
+            autoDelay: 6000,
+            easingCarousel: "swing",
+            easingDetails: "easeOutBack",
+            durationCarousel: 1000,
+            durationDetails: 600
+        });
+        
+		});
+		</script>
+		<style>
+			#form table{
+			}
+			#form table tr td{
+				text-align: center;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header2">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl_2.png" alt="Central Information System"/>
+		</div>
+		<div id="panel">
+		{% if user.Username == "admin" %}
+			Admin
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">Edit/View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+                  	</ul>
+                </li>
+                <li><a href="#">Manage Professor</a>
+                    <ul>
+						<li><a href="/cis/prof/1/">Add Professor</a></li>
+                        <li><a href="/cis/prof/2/">View/Edit Professors</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Class Rooms</a>
+                    <ul>
+                        <li><a href="/cis/rooms/1/">Add Classroom</a></li>
+						<li><a href="/cis/rooms/2/">View/Remove Classroom</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Courses</a>
+                    <ul>
+                        <li><a href="/cis/courses/1/">Add Courses</a></li>
+                        <li><a href="/cis/courses/2/">Edit/View Courses</a></li>
+                  	</ul>
+                </li><li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="#">Account Settings</a></li>
+						<li><a href="/cis/prof_req/">Requests</a></li>
+						<li><a href="/cis/home/">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+		{% else %}
+			{{user.Name}}
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login/">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+						</li>
+                  	</ul>
+                </li>
+                <li><a href="/cis/prof/2/">View Professors</a>
+                </li>
+				<li><a href="/cis/rooms/2/">View Classroom</a>
+				</li>
+                  	
+				<li><a href="/cis/courses/2/">View Courses</a>
+                </li>
+				<li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+                        <li><a href="/cis/prof_req/">Requests</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+		{% endif %}
+		</div>
+		<div id="form">
+			<span>Requests<br/><br/></span>
+			{% if user.Username == "admin" %}
+					<table align="center" border="pixels" rules="all">
+						<tr>
+							<td style="font-size:25px; font-weight:bold">Year</td>
+							<td style="font-size:25px; font-weight:bold">Day:Period</td>
+							<td style="font-size:25px; font-weight:bold">Subject</td>
+							<td style="font-size:25px; font-weight:bold">Room</td>
+							<td style="font-size:25px; font-weight:bold">Status</td>
+							<td style="font-size:25px; font-weight:bold">Actions</td>
+						</tr>
+					{% for r in req %}
+						<tr>
+						{% if r.t1 != None %}
+							<td>1st Year</td>
+							<td>{{r.t1.Cell.day}}:{{r.t1.Cell.slot|add:"7"}}:00hrs</td>
+							<td>{% if r.t1.Extra == None %}
+								{{r.t1.Course.course_id}}
+							{% else %}
+								{{r.t1.Extra}}
+							{% endif %}</td>
+							<td>{{r.t1.Room.room_id}}</td>
+							<td>{% if r.t1.approved == True %}
+									Approved
+								{% else %}
+									Pending
+								{% endif %}</td>
+						{% endif %}
+						{% if r.t2 != None %}
+							<td>2nd Year</td>
+							<td>{{r.t2.Cell.day}}:{{r.t2.Cell.slot}}</td>
+							<td>{% if r.t2.Extra == None %}
+								{{r.t2.Course.course_id}}
+							{% else %}
+								{{r.t2.Extra}}
+							{% endif %}</td>
+							<td>{{r.t2.Room.room_id}}</td>
+							<td>{% if r.t2.approved == True %}
+									Approved
+								{% else %}
+									Pending
+								{% endif %}</td>
+						{% endif %}
+						{% if r.t3 != None %}
+							<td>3rd Year</td>
+							<td>{{r.t3.Cell.day}}:{{r.t3.Cell.slot}}</td>
+							<td>{% if r.t3.Extra == None %}
+								{{r.t3.Course.course_id}}
+							{% else %}
+								{{r.t3.Extra}}
+							{% endif %}</td>
+							<td>{{r.t3.Room.room_id}}</td>
+							<td>{% if r.t3.approved == True %}
+									Approved
+								{% else %}
+									Pending
+								{% endif %}</td>
+						{% endif %}
+						{% if r.t4 != None %}
+							<td>4th Year</td>
+							<td>{{r.t4.Cell.day}}:{{r.t4.Cell.slot}}</td>
+							<td>{% if r.t4.Extra == None %}
+								{{r.t4.Course.course_id}}
+							{% else %}
+								{{r.t4.Extra}}
+							{% endif %}</td>
+							<td>{{r.t4.Room.room_id}}</td>
+							<td>{% if r.t4.approved == True %}
+									Approved
+								{% else %}
+									Pending
+								{% endif %}</td>
+						{% endif %}
+						<td><a href="/cis/manage_req/1/{{r.id}}/">Approve</a>
+						<a href="/cis/manage_req/2/{{r.id}}">Close</a></td>
+						</tr>
+					{% endfor %}
+				</table>
+			{% else %}
+					<div class="left">
+					<b>Requests Made</b><br/>
+					<table align="center" border="pixels" rules="all">
+					{% for r in req %}
+						<tr>
+						{% if r.t1 != None %}
+							<td>1st Year</td>
+							<td>{{r.t1.Cell.day}}:{{r.t1.Cell.slot|add:"7"}}:00hrs</td>
+							<td>{% if r.t1.Extra == None %}
+								{{r.t1.Course.course_id}}
+							{% else %}
+								{{r.t1.Extra}}
+							{% endif %}</td>
+							<td>{{r.t1.Room.room_id}}</td>
+						{% endif %}
+						{% if r.t2 != None %}
+							<td>2nd Year</td>
+							<td>{{r.t2.Cell.day}}:{{r.t2.Cell.slot}}</td>
+							<td>{% if r.t2.Extra == None %}
+								{{r.t2.Course.course_id}}
+							{% else %}
+								{{r.t2.Extra}}
+							{% endif %}</td>
+							<td>{{r.t2.Room.room_id}}</td>
+						{% endif %}
+						{% if r.t3 != None %}
+							<td>3rd Year</td>
+							<td>{{r.t3.Cell.day}}:{{r.t3.Cell.slot}}</td>
+							<td>{% if r.t3.Extra == None %}
+								{{r.t3.Course.course_id}}
+							{% else %}
+								{{r.t3.Extra}}
+							{% endif %}</td>
+							<td>{{r.t3.Room.room_id}}</td>
+						{% endif %}
+						{% if r.t4 != None %}
+							<td>4th Year</td>
+							<td>{{r.t4.Cell.day}}:{{r.t4.Cell.slot}}</td>
+							<td>{% if r.t4.Extra == None %}
+								{{r.t4.Course.course_id}}
+							{% else %}
+								{{r.t4.Extra}}
+							{% endif %}</td>
+							<td>{{r.t4.Room.room_id}}</td>
+						{% endif %}
+						</tr>
+					{% endfor %}
+				</table>
+				</div>
+				<div class="right">
+					<b>Appointements Requests Received</b>
+				<table align="center" border="pixels" rules="all">
+					{% for a in app %}
+					<tr>
+						<td>{{a.student.Username}}</td>
+						<td>{{a.Month}}/{{a.Day}}</td>
+						<td>{{a.Hour}}/{{a.Minute}}</td>
+						{% if a.confirmed == 1 %}
+							<td>Approved</td> 
+						{% else %}
+							<td><a href="/cis/manage_appoint/1/{{a.id}}/">Approve</a></td>
+						{% endif %}
+						<td><a href="/cis/manage_appoint/2/{{a.id}}">Close</a></td>
+					</tr>
+					{% endfor %}
+				</table>
+				</div>
+			{% endif %}
+		</div>
+	</body>
+</html>

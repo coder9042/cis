@@ -1,0 +1,243 @@
+<html>
+	<head>
+		<title>
+			CIS : Professor Settings
+		</title>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style2.css" type="text/css" />
+		<script language="javascript" src="{{STATIC_URL}}js/menu.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ddsmoothmenu.js"></script>
+		
+		<script type="text/javascript">
+			ddsmoothmenu.init({
+			mainmenuid: "templatemo_menu", //menu DIV id
+			orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+			classname: 'ddsmoothmenu', //class added to menu's outer DIV
+			//customtheme: ["#1c5a80", "#18374a"],
+			contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+			})
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+        
+        $("#carousel").dualSlider({
+            auto:true,
+            autoDelay: 6000,
+            easingCarousel: "swing",
+            easingDetails: "easeOutBack",
+            durationCarousel: 1000,
+            durationDetails: 600
+        });
+        
+		});
+		</script>
+		<script type="text/javascript">
+			function validateDeletion(id)
+			{
+				if(confirm("Are you sure you want to remove professor "+id+" from the database?")== true)
+					return true;
+				else
+					return false;
+			}
+			function unhide(id,desig,name,dept,email,ext)
+			{
+				var form=document.getElementById('editing');
+				form.desig.value=desig;
+				form.name.value=name;
+				form.p_name.value=name;
+				form.deptt.value=dept;
+				form.email.value=email;
+				form.ext.value=ext;
+				var item=document.getElementById(id);
+				if(item)
+				{
+					item.className=(item.className=='hide')?'unhide':'hide';
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="header2">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl_2.png" alt="Central Information System"/>
+		</div>
+		<div id="panel">
+		{% if user.Username == "admin" %}
+			Welcome Admin
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">Edit/View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+                  	</ul>
+                </li>
+                <li><a href="#">Manage Professor</a>
+                    <ul>
+						<li><a href="/cis/prof/1/">Add Professor</a></li>
+                        <li><a href="/cis/prof/2/">View/Edit Professors</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Class Rooms</a>
+                    <ul>
+                        <li><a href="/cis/rooms/1/">Add Classroom</a></li>
+						<li><a href="/cis/rooms/2/">View/Remove Classroom</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Courses</a>
+                    <ul>
+                        <li><a href="/cis/courses/1/">Add Courses</a></li>
+                        <li><a href="/cis/courses/2/">Edit/View Courses</a></li>
+                  	</ul>
+                </li><li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+						<li><a href="/cis/prof_req/">Requests</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+			<br/>
+		{% else %}
+			Welcome {{user.Name}}
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login/">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+						</li>
+                  	</ul>
+                </li>
+                <li><a href="/cis/prof/2/">View Professors</a>
+                </li>
+				<li><a href="/cis/rooms/2/">View Classroom</a>
+				</li>
+                  	
+				<li><a href="/cis/courses/2/">View Courses</a>
+                </li>
+				<li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+                        <li><a href="/cis/prof_req/">Requests</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div><br/>
+		{% endif %}
+		{% if page == 1 %}
+			{% if user.Username == "admin" %}
+				<div id="rooms">
+					<div class="head">Add Professor</div><br/>
+					<form action="" method="post">
+						{% if 'dup' in errors %}
+							<div class="error">{{errors.dup}}</div>
+						{% endif %}<br/>
+						{% csrf_token %}
+						<input type="text" style="background:url({{STATIC_URL}}images/prof_form/name.png) center no-repeat" value="{{data.name}}" name="name" required="required" /><br/>
+						<br/>
+						<input type="text" style="background:url({{STATIC_URL}}images/prof_form/desig.png) center no-repeat; padding-left:150px;" value="{{data.desig}}" name="desig" required="required" /><br/>
+						<br/>
+						<input type="text" style="background:url({{STATIC_URL}}images/prof_form/deptt.png) center no-repeat; padding-left:150px;" value="{{data.deptt}}" name="deptt" required="required" />
+						{% if 'deptt' in errors %}
+							<div class="error">{{errors.deptt}}</div>
+						{% endif %}<br/>
+						<br/>
+						<input type="email" style="background:url({{STATIC_URL}}images/prof_form/emailid.png) center no-repeat" value="{{data.email}}" name="email" required="required" /><br/>
+						<br/>
+						<input type="text" style="background:url({{STATIC_URL}}images/prof_form/ph.png) center no-repeat; padding-left:160px" value="{{data.ext}}" name="extension" required="required" />
+						{% if 'ext' in errors %}
+							<div class="error">{{errors.ext}}</div>
+						{% endif %}<br/>
+						<br/>
+						<br/>
+						<input type="submit" style="width:160px;" name="Add" class="btn" value="Add Professor" />
+					</form>
+				</div>
+			{% endif %}
+		{% else %}
+			<div id="profs">
+				<div class="head">Professors</div><br/>
+				<table align="center" border="pixels" rules="all">
+					<tr>
+					<td width="20%"><b>Name</b></td>
+					<td width="20%"><b>Designation</b></td>
+					<td width="15%"><b>Department</b></td>
+					<td width="15%"><b>Email Id</b></td>
+					<td width="10%"><b>Phone Extension</b></td>
+					</tr>
+					{% for p in profs %}
+					<tr>	
+						<td width="20%">{{p.Name}}</td>
+						<td width="20%">{{p.Designation}}</td>
+						<td width="15%">{{p.Department}}</td>
+						<td width="15%">{{p.Email}}</td>
+						<td width="10%">{{p.PhoneExtension}}</td>
+						{% if user.Username == "admin" %}
+							<td width="10%"><form ><input type="button" class="btn" style="width:85px;" value="Edit" onclick="unhide('edit_prof','{{p.Designation}}','{{p.Name}}','{{p.Department}}','{{p.Email}}','{{p.PhoneExtension}}');" /></form></td>
+							<td width="10%"><form action="" onsubmit="return validateDeletion(this.nm.value);" method="post">{% csrf_token %}<input type="text" name="nm" value="{{p.Name}}" hidden="hidden" /><input type="submit" class="btn" name="Remove" value="Remove"/></form></td>
+						{% endif %}
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			{% if unhide %}
+			<div id="edit_prof" class="unhide">
+			<a href="/cis/prof/2"><img src="{{STATIC_URL}}images/close.png" alt="Close" align="right" width="30" height="15"/></a>
+			{% else %}
+			<div id="edit_prof" class="hide">
+			<a href="javascript:unhide('edit_prof');"><img src="{{STATIC_URL}}images/close.png" alt="Close" align="right" width="30" height="15"/></a>
+			{% endif %}
+						<div class="head">EDIT DETAILS</div>
+						<br/>
+						<form action="/cis/prof/2/" method="post" id="editing">
+						{% csrf_token %}
+						{% if 'dup' in errors %}
+							<div class="error">{{errors.dup}}</div>
+						{% endif %}<br/>
+						<input type="text" value="{{p_name}}" name="p_name" required="required" hidden="hidden" />
+						<input type="text" style="background:url({{STATIC_URL}}images/prof_form/name.png) center no-repeat" value="{{data.name}}" name="name" required="required" /><br/>
+						<br/>
+						<input type="text" style="background:url({{STATIC_URL}}images/prof_form/desig.png) center no-repeat; padding-left:150px;" value="{{data.desig}}" name="desig" required="required" /><br/>
+						<br/>
+						<input type="text" style="background:url({{STATIC_URL}}images/prof_form/deptt.png) center no-repeat; padding-left:150px;" value="{{data.deptt}}" name="deptt" required="required" />
+						{% if 'deptt' in errors %}
+							<div class="error">{{errors.deptt}}</div>
+						{% endif %}<br/>
+						<br/>
+						<input type="email" style="background:url({{STATIC_URL}}images/prof_form/emailid.png) center no-repeat" value="{{data.email}}" name="email" required="required" /><br/>
+						<br/>
+						<input type="text" style="background:url({{STATIC_URL}}images/prof_form/ph.png) center no-repeat; padding-left:160px" value="{{data.ext}}" name="ext" required="required" />
+						{% if 'ext' in errors %}
+							<div class="error">{{errors.ext}}</div>
+						{% endif %}<br/>
+						<br/>
+						<input type="submit" class="btn" name="Save" value="Save" />
+						</form>
+				</div>
+		{% endif %}
+		</div>
+	</body>
+</html>

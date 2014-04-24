@@ -1,0 +1,172 @@
+<html>
+	<head>
+		<title>
+			CIS : Student Appointments
+		</title>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style3.css" type="text/css" />
+		<script language="javascript" src="{{STATIC_URL}}js/menu.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ddsmoothmenu.js"></script>
+		
+		<script type="text/javascript">
+			ddsmoothmenu.init({
+			mainmenuid: "templatemo_menu", //menu DIV id
+			orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+			classname: 'ddsmoothmenu', //class added to menu's outer DIV
+			//customtheme: ["#1c5a80", "#18374a"],
+			contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+			})
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+        
+        $("#carousel").dualSlider({
+            auto:true,
+            autoDelay: 6000,
+            easingCarousel: "swing",
+            easingDetails: "easeOutBack",
+            durationCarousel: 1000,
+            durationDetails: 600
+        });
+        
+		});
+		</script>
+		<script type="text/javascript">
+			function validateDeletion(id)
+			{
+				if(confirm("Are you sure you want to remove professor "+id+" from the database?")== true)
+					return true;
+				else
+					return false;
+			}
+			function unhide(id,desig,name,dept,email,ext)
+			{
+				var form=document.getElementById('editing');
+				form.desig.value=desig;
+				form.name.value=name;
+				form.p_name.value=name;
+				form.deptt.value=dept;
+				form.email.value=email;
+				form.ext.value=ext;
+				var item=document.getElementById(id);
+				if(item)
+				{
+					item.className=(item.className=='hide')?'unhide':'hide';
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="header2">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl_2.png" alt="Central Information System"/>
+		</div>
+		<div id="panel">
+			Welcome {{ user.Username }}
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/studlogin">Home</a>
+                </li>
+                <li><a href="#">Time Table</a>
+					<ul>
+						<li><a href="/cis/tt1/{{batch}}/{{isstud}}">1st Year</a></li>
+						<li><a href="/cis/tt2/{{isstud}}">2nd Year</a></li>
+						<li><a href="/cis/tt3/{{isstud}}">3rd Year</a></li>
+						<li><a href="/cis/tt4/{{isstud}}">4th Year</a></li>
+					</ul>
+                </li>
+                <li><a href="#">Appointments</a>
+                    <ul>
+						<li><a href="/cis/Appoint/1/">Make Appointments</a></li>
+                        <li><a href="/cis/Appoint/2/">View Appointments</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/pass/">Change Password</a></li>
+						<li><a href="/cis/studhome">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+			<br/>
+		{% if page == 1 %}
+				<div id="rooms">
+					<div class="head">Make Appointment</div><br/>
+					<form action="" method="post">
+						{% csrf_token %}
+						Professor:
+							<select name="prof" >
+							{% for p in profs %}
+								<option value="{{p.Name}}">{{p.Name}}</option>
+							{% endfor %}
+							</select><br/>
+						{% if 'name' in errors %}
+							<div class="error">{{errors.name}}</div>
+						{% endif %}<br/>
+						Professor's Department<br/>
+						<input type="text" value="{{data.deptt}}" name="deptt" required="required" />
+						{% if 'deptt' in errors %}
+							<div class="error">{{errors.deptt}}</div>
+						{% endif %}<br/></br>
+						Month:
+							<select name="month" >
+							{% for m in months %}
+								<option value="{{m}}">{{m}}</option>
+							{% endfor %}
+							</select>&nbsp&nbsp
+						Day:
+							<select name="day" >
+							{% for d in days %}
+								<option value="{{d}}">{{d}}</option>
+							{% endfor %}
+							</select><br/><br/>
+						Hour:
+							<select name="hour" >
+							{% for m in hours %}
+								<option value="{{m}}">{{m}}</option>
+							{% endfor %}
+							</select>&nbsp&nbsp
+						Minute:
+							<select name="minute" >
+							{% for m in minutes %}
+								<option value="{{m}}">{{m}}</option>
+							{% endfor %}
+							</select>
+						{% if 'date' in errors %}
+							<div class="error">{{errors.date}}</div>
+						{% endif %}<br/><br/>
+						<input type="submit" name="Make" value="Make Appointment" />
+					</form>
+				</div>
+		{% else %}
+			<div id="profs">
+				<div class="head">Appointments</div><br/>
+				<table align="center" border="pixels" rules="all">
+					<tr>
+					<td width="20%"><b>Professor's Name</b></td>
+					<td width="20%"><b>Professor's Department</b></td>
+					<td width="15%"><b>Date(dd/mm)</b></td>
+					<td width="15%"><b>Time</b></td>
+					<td width="15%"><b>Status</b></td>
+					</tr>
+					{% for a in appointments %}
+					<tr>	
+						<td width="20%">{{a.professor.Name}}</td>
+						<td width="20%">{{a.professor.Department}}</td>
+						<td width="15%">{{a.Day}}/{{a.Month}}</td>
+						<td width="15%"><b>{{a.Hour}}:{{a.Minute}}</b></td>
+						{% if a.confirmed = 1 %}
+							<td width="15%"><b>Approved</b></td>
+						{% else %}
+							<td width="15%"><b>Pending</b></td>
+						{% endif %}
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		{% endif %}
+	</body>
+	
+</html>

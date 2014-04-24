@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>IIT PATNA : CIS</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{STATIC_URL}}css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="all">
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="css/ie6.css" type="text/css" media="screen">
+<script type="text/javascript" src="js/ie_png.js"></script>
+<script type="text/javascript">ie_png.fix('.png, footer, header nav ul li a, .nav-bg, .list li img');</script>
+<![endif]-->
+<!--[if lt IE 9]><script type="text/javascript" src="js/html5.js"></script><![endif]-->
+</head>
+<body id="page1">
+<!-- START PAGE SOURCE -->
+<div class="wrap">
+  <header>
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="/cis/home" class="m1">Home Page</a></li>
+          <li class="current"><a href="/cis/studhome/" class="m2">Students</a></li>
+          <li class="last"><a href="{{STATIC_URL}}cis_documentation/_build/html/index.html" class="m5">Help</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="container">
+    <aside>
+      <a href="#"><img src="{{STATIC_URL}}images/logo.png" /></a>
+      <form action="/cis/studlogin/" method="post" id="login-form">
+    {%csrf_token%}
+        <fieldset>
+          <div class="rowElem">
+            <h2>Student Login</h2>
+      Username:<br/>
+            <input type="text" required="required" placeholder="Enter Your Username Here" name="username" /><br/>
+      Password:<br/>
+      <input type="password" required="required" placeholder="Enter Your Password Here" name="pass" /><br/>
+      <input type="submit" class="btn" style="width:182px; height:28px;" value="Login" name="login"/><br/>
+      {%if msg %}
+        <font color="white">{{msg}}</font><br/>
+        <a href="/cis/resetPass/">Forgot password??</a><br/>
+      {%endif%}
+          </div>
+        </fieldset>
+      </form>
+    </aside>
+    <section id="content">
+      <img src="{{STATIC_URL}}images/p1.png" />
+      <img src="{{STATIC_URL}}images/p5.png" />
+      <img src="{{STATIC_URL}}images/p2.png" />
+      <img src="{{STATIC_URL}}images/p3.png" />
+      <img src="{{STATIC_URL}}images/p6.png" />
+      <img src="{{STATIC_URL}}images/p4.png" />
+  </section>
+  </div>
+</div>
+<footer>
+  <div class="footerlink">
+    <p class="lf">Copyright &copy; 2014 <a href="#">Indian Institute of Technology Patna</a></p>
+    <p class="rf">Designed By: Anubhav Joshi | Ashish Bhuker</p>
+    <div style="clear:both;"></div>
+  </div>
+</footer>
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>

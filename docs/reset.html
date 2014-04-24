@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>IIT PATNA : CIS</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{STATIC_URL}}css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="all">
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="css/ie6.css" type="text/css" media="screen">
+<script type="text/javascript" src="js/ie_png.js"></script>
+<script type="text/javascript">ie_png.fix('.png, footer, header nav ul li a, .nav-bg, .list li img');</script>
+<![endif]-->
+<!--[if lt IE 9]><script type="text/javascript" src="js/html5.js"></script><![endif]-->
+</head>
+<body id="page1">
+<!-- START PAGE SOURCE -->
+<div class="wrap">
+  <header>
+    <div class="container">
+      <nav>
+        <ul>
+          <li class="current"><a href="/cis/home" class="m1">Home Page</a></li>
+          <li><a href="#" class="m2">Students</a></li>
+          <li class="last"><a href="#" class="m5">Help</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+    <div class="container2">
+      <aside>
+          <a href="#"><img src="{{STATIC_URL}}images/logo.png"/></a>
+      </aside>
+      <br/>
+      <h2>Reset Your account Password</h2>
+      <br/><br/>
+      <form action="" method="post">
+      {% if type == 1 %}
+        {% csrf_token %}
+        <b>Enter Your Email Id:</b><br/><br/>
+        <input type="text" class="inp" name="e_id" required="required" placeholder="Enter Your IITP Email ID"/><br/>
+        <font color="red">{{error}}</font>
+        <br/>
+        <input type="submit" class="btn2" name="emailId"><br/> 
+      {% elif type == 2 %}
+        {% csrf_token %}
+        <b>Enter The Code That Was Sent To Your Email ID:</b><br/><br/>
+        <input type="text" class="inp" name="code" required="required" placeholder="Enter Code Here"/><br/>
+        <font color="red">{{error}}</font><br/>
+        <input type="text" style="text-align:center" name="code_prof" value="{{ prof }}" class="hide"/>
+        <br/> 
+        <input type="submit" class="btn2" name="emailId"><br/>
+      {% elif type == 3 %}
+        {% csrf_token %}
+        <b>Enter Your New Password:</b><br/><br/>
+        <input type="password" class="inp" name="new_pass" required="required" placeholder="Enter New Password Here"/><br/>
+        <input type="text" name="code_prof" value="{{ prof }}" class="hide"/>
+        <br/> 
+        <input type="submit" class="btn2" name="emailId"><br/>
+      {% endif %}
+      </form>
+      <section id="content">
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+    </section>
+    </div>
+</div>
+<footer>
+  <div class="footerlink">
+    <p class="lf">Copyright &copy; 2014 <a href="#">Indian Institute of Technology Patna</a></p>
+    <p class="rf">By Anubhav Joshi | Ashish Bhuker</p>
+    <div style="clear:both;"></div>
+  </div>
+</footer>
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>

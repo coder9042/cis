@@ -1,0 +1,202 @@
+<html>
+	<head>
+		<title>
+			CIS : Rooms Settings
+		</title>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style2.css" type="text/css" />
+		<script language="javascript" src="{{STATIC_URL}}js/menu.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ddsmoothmenu.js"></script>
+		
+		<script type="text/javascript">
+			ddsmoothmenu.init({
+			mainmenuid: "templatemo_menu", //menu DIV id
+			orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+			classname: 'ddsmoothmenu', //class added to menu's outer DIV
+			//customtheme: ["#1c5a80", "#18374a"],
+			contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+			})
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+        
+        $("#carousel").dualSlider({
+            auto:true,
+            autoDelay: 6000,
+            easingCarousel: "swing",
+            easingDetails: "easeOutBack",
+            durationCarousel: 1000,
+            durationDetails: 600
+        });
+        
+		});
+		</script>
+		<script type="text/javascript">
+			function validateDeletion(id)
+			{
+				if(confirm("Are you sure you want to remove room "+id+" from the database?")== true)
+					return true;
+				else
+					return false;
+			}
+			function unhide(id)
+			{
+				var item=document.getElementById(id);
+				if(item)
+				{
+					item.className='unhide';
+				}
+			}
+			function hide(id)
+			{
+				var item=document.getElementById(id);
+				if(item)
+				{
+					item.className='hide';
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="header2">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl_2.png" alt="Central Information System"/>
+		</div>
+		<div id="panel">
+		{% if user.Username == "admin" %}
+			Welcome Admin
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">Edit/View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+                  	</ul>
+                </li>
+                <li><a href="#">Manage Professor</a>
+                    <ul>
+						<li><a href="/cis/prof/1/">Add Professor</a></li>
+                        <li><a href="/cis/prof/2/">View/Edit Professors</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Class Rooms</a>
+                    <ul>
+                        <li><a href="/cis/rooms/1/">Add Classroom</a></li>
+						<li><a href="/cis/rooms/2/">View/Remove Classroom</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Courses</a>
+                    <ul>
+                        <li><a href="/cis/courses/1/">Add Courses</a></li>
+                        <li><a href="/cis/courses/2/">Edit/View Courses</a></li>
+                  	</ul>
+                </li><li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+						<li><a href="/cis/prof_req/">Requests</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+			<br/>
+		{% else %}
+			Welcome {{user.Name}}
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login/">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+						</li>
+                  	</ul>
+                </li>
+                <li><a href="/cis/prof/2/">View Professors</a>
+                </li>
+				<li><a href="/cis/rooms/2/">View Classroom</a>
+				</li>
+                  	
+				<li><a href="/cis/courses/2/">View Courses</a>
+                </li>
+				<li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+                        <li><a href="/cis/prof_req/">Requests</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div><br/>
+		{% endif %}
+		{% if page == 1 %}
+			{% if user.Username == "admin" %}
+				<div id="rooms">
+					<div class="head">Add Room</div><br/>
+					<form action="" method="post">
+						{% csrf_token %}
+						<input type="text" style="background:url({{STATIC_URL}}images/room_form/room.png) center no-repeat; padding-left:152px;" name="id" required="required" /><br/>
+						<br/>
+						<input type="text" style="background:url({{STATIC_URL}}images/room_form/room_2.png) center no-repeat; padding-left:152px;" name="strength" required="required" /><br/>
+						<div class="error">{{errors.0}}</div><br/>
+						<img src="{{STATIC_URL}}images/room_form/room_3.png" /><br/>
+						Yes<input type="radio" style="width:20px;" name="lab" onclick="unhide('l_type');" required="required" value="Yes"/> No<input type="radio" style="width:20px;" onclick="hide('l_type');" required="required" name="lab" value="No"/><br/>
+						<div id="l_type" class="hide"><input type="text" style="background:url({{STATIC_URL}}images/room_form/room_4.png) center no-repeat;" name="lab_type" placeholder="Enter the initials of lab department"/><br/></div><br/>
+						<div class="error">{{errors.1}}</div><br/>
+						<img src="{{STATIC_URL}}images/room_form/room_4_2.png" /><br/>
+						Yes<input type="radio" style="width:20px;" name="projector" required="required" value="Yes"/> No<input type="radio" style="width:20px;" required="required" name="projector" value="No"/><br/><br/>
+						<img src="{{STATIC_URL}}images/room_form/room_5.png" /><br/>
+						Yes<input type="radio" style="width:20px;" required="required" name="conference" value="Yes" />No<input type="radio" style="width:20px;" required="required" name="conference" value="No" /><br/><br/>
+						<br/>
+						<input type="submit" style="width:150px; height:35px;" name="Add" class="btn" value="Add Room" />
+					</form>
+				</div>
+			{% endif %}
+		{% else %}
+			<div id="rooms">
+				<div class="head">Rooms</div><br/>
+				<table align="center" border="pixels" rules="all">
+					<tr>
+					<td width="20%"><b>Room Id</b></td>
+					<td width="15%"><b>Room Strength</b></td>
+					<td width="15%"><b>Projector</b></td>
+					<td width="15%"><b>Conference</b></td>
+					<td width="15%"><b>Type</b></td>
+					</tr>
+					{% for r in rooms %}
+					<tr>	
+						<td width="20%">{{r.room_id}}</td>
+						<td width="15%">{{r.room_strength}}</td>
+						<td width="15%">{% if r.projector %} Yes {% else %} No {% endif %}</td>
+						<td width="15%">{% if r.conference %} Yes {% else %} No {% endif %}</td>
+						<td width="15%">{% if r.isLab %} Lab {% else %} Lecture Room {% endif %}</td>
+						{% if user.Username == "admin" %}
+							<td width="20%"><form action="" onsubmit="return validateDeletion(this.id.value);" method="post">{% csrf_token %}<input type="text" name="id" value="{{r.room_id}}" hidden="hidden" /><input type="submit" class="btn" name="Remove" value="Remove"/></form></td>
+						{% endif %}
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		{% endif %}
+		</div>
+	</body>
+</html>

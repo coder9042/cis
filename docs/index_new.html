@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>CIS: IIT Patna</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{{STATIC_URL}}home/css/reset.css" type="text/css" media="all">
+		<link rel="stylesheet" href="{{STATIC_URL}}home/css/layout.css" type="text/css" media="all">
+		<link rel="stylesheet" href="{{STATIC_URL}}home/css/style.css" type="text/css" media="all">
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/jquery-1.6.js" ></script>
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/cufon-yui.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/cufon-replace.js"></script>
+  		<script type="text/javascript" src="{{STATIC_URL}}home/js/Ubuntu_400.font.js"></script>
+  		<script type="text/javascript" src="{{STATIC_URL}}home/js/Ubuntu_700.font.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/bgSlider.js" ></script>
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/script.js" ></script>
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/pages.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/bg.js" ></script>
+		<script type="text/javascript" src="{{STATIC_URL}}home/js/tabs.js"></script>
+		<!--[if lt IE 9]>
+			<script type="text/javascript" src="js/html5.js"></script>
+		<![endif]-->
+		<!--[if lt IE 7]>
+			<div style='clear:both;text-align:center;position:relative'>
+				<a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0"  alt="" /></a>
+			</div>
+		<![endif]-->
+	</head>
+	<body id="page1">
+		<div class="spinner"></div>
+		<div id="bgSlider"></div>
+		<div class="extra">
+			<div class="main">
+				<div class="box">
+<!-- header -->
+					<header>
+						<h1><a href="index.html" id="logo">Thom Sander Photographer’s Portfolio</a></h1>
+						<nav>
+							<ul id="menu">
+								<li><a href="#"><span></span><strong>Home</strong></a></li>
+								<li><a href="#!/page_About"><span></span><strong>About</strong></a></li>
+								<li><a href="#!/page_Portfolio"><span></span><strong>Login</strong></a></li>
+								<li><a href="#!/page_Services"><span></span><strong>Help</strong></a></li>
+								<li><a href="#!/page_Contact"><span></span><strong>Contact</strong></a></li>
+							</ul>
+						</nav>
+					</header>
+<!--content -->
+					<article id="content">
+						<ul>
+							<li id="page_About">
+								<div class="box1">
+									<div class="inner">
+										<a href="#" class="close" data-type="close"><span></span></a>
+										<h2>Professors:</h2>
+										<h3>Login to</h3>
+										<ul class="list2 pad_bot1">
+											<li><a href="#">View your own time table</a></li>
+											<li><a href="#">Username is firstname.department_initials.</a></li>
+											<li><a href="#">Manage your appointments.</a></li>
+											<li><a href="#">Schedule extra classes.</a></li>
+											<li><a href="#">Schedule seminars.</a></li>
+										</ul>
+										</br></br>
+										<h2>Students:</h2>
+										<h3>Login to</h3>
+										<ul class="list2 pad_bot1">
+											<li><a href="#">View your own time table</a></li>
+											<li><a href="#">Request appointments with professors.</a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							<li id="page_Portfolio">
+								<div id="page_Portfolio_class" class="box1">
+									<div class="inner">
+										<a href="#" class="close" data-type="close"><span></span></a>
+										<div class="wrapper tabs">
+											<div class="col1">
+												<h2>Options</h2>
+												<ul class="nav">
+													<li class="selected"><a href="#Prof"><span></span><strong>Professor</strong></a></li>
+													<li><a href="#Stud"><span></span><strong>Students</strong></a></li>
+													<li><a href="#forgotPass"><span></span><strong>Reset Pass</strong></a></li>
+												</ul>
+											</div>
+											<div class="col2 pad_left1">
+												<div class="tab-content" id="Prof">
+													<h2>Professors</h2>
+													<form id="ContactForm">
+														{% csrf_token %}
+														<div>
+															<div  class="wrapper">
+																<span>Username:</span>
+																<input type="text" required="required" class="input" placeholder="Enter Your Username Here" name="username" />
+															</div>
+															<div  class="wrapper">
+																<span>Password</span>
+																<input type="password" class="input" required="required" placeholder="Enter Your Password Here" name="pass" />
+															</div>
+															<div class="wrapper">
+															<span>&nbsp;</span>
+															<a href="#" class="button1" onClick="document.getElementById('ContactForm').reset()"><span></span><strong>Clear</strong></a>
+															<a href="#" class="button1" onClick="document.getElementById('ContactForm').submit()"><span></span><strong>Submit</strong></a>
+															</div>
+														</div>
+													</form>
+												</div>
+												<div class="tab-content" id="Stud">
+													<h2>Students</h2>
+													<form id="ContactForm">
+														<div>
+															<div  class="wrapper">
+																<span>Username:</span>
+																<input type="text" class="input" required="required" placeholder="Enter Your Username Here" name="username" />
+															</div>
+															<div  class="wrapper">
+																<span>Password</span>
+																<input type="password" class="input" required="required" placeholder="Enter Your Password Here" name="pass" />
+															</div>
+															<div class="wrapper">
+															<span>&nbsp;</span>
+															<a href="#" class="button1" onClick="document.getElementById('ContactForm').reset()"><span></span><strong>Clear</strong></a>
+															<a href="#" class="button1" onClick="document.getElementById('ContactForm').submit()"><span></span><strong>Submit</strong></a>
+															</div>
+														</div>
+													</form>
+												</div>
+												
+												<div class="tab-content" id="forgotPass">
+													<h2>Reset Password</h2>
+													<form action="/cis/resetPass/" method="post" id="ContactForm">
+														<div>
+															<div  class="wrapper">
+															{% if type == 1 %}
+																{% csrf_token %}
+																<span>Email Id:</span>
+																<input type="text" class="input" required="required" placeholder="Enter Your Username Here" name="e_id" /><br/>
+																<font color="white">{{error}}</font><br/>
+															{% elif type == 2 %}
+																{% csrf_token %}
+																<span>Enter The Code That Was Sent To Your Email ID:</span>
+																<input type="text" class="input" required="required" placeholder="Enter Code Here" name="code" /><br/>
+																<font color="white">{{error}}</font>
+																<input type="text" name="code_prof" value="{{ prof }}" hidden="hidden" /><br/>
+															{% elif type == 3 %}
+																{% csrf_token %}
+																<span>Enter Your New Password:</span>
+																<input type="password" class="input" name="new_pass" required="required" placeholder="Enter New Password Here" /><br/>
+																<input type="text" name="code_prof" value="{{ prof }}" hidden="hidden"/><br/>
+															{% endif %}
+															</div>
+															<div class="wrapper">
+															<span>&nbsp;</span>
+															<a href="#" class="button1" onClick="document.getElementById('ContactForm').submit()"><span></span><strong>Submit</strong></a>
+															</div>
+														</div>
+													</form>
+												</div>
+												<br/><br/><br/><br/>
+												<div>
+													{%if msg %}
+														<font color="white">WRONG USERNAME OR PASSWORD.</font><br/>
+													{%endif%}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li id="page_Services">
+								<div class="box1">
+									<div class="inner">
+										<a href="#" class="close" data-type="close"><span></span></a>
+										<div class="wrapper pad_bot3">
+											<h2>Help</h2>
+											<div class="col1">
+											</div>
+											<div class="col1 pad_left1">
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li id="page_Contact">
+								<div class="box1">
+									<div class="inner">
+										<a href="#" class="close" data-type="close"><span></span></a>
+										<div class="wrapper">
+											<div class="col1">
+												<h2>Contact</h2>
+												<p style="font-size:22px;"><strong>Anubhav Joshi</strong></p>
+												<b>Email:</b> anubhav.cs12@iitp.ac.in<br/>
+												<b>Phone:</b> +91-8084257108<br/>
+											</div>
+											<div class="col1 pad_left1">
+												<h2><br/></h2>
+												<p style="font-size:22px;"><strong>Ashish Bhuker</strong></p>
+												<b>Email:</b> ashish.cs12@iitp.ac.in<br/>
+												<b>Phone:</b> +91-9472458960<br/>
+												</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</article>
+<!-- / content -->
+				</div>
+			</div>
+			<div class="block"></div>
+		</div>
+		<div class="bg1">
+			<div class="main">
+<!-- footer -->
+				<footer>
+					<div class="col_1">
+						Copyright &copy IIT Patna<br/>
+						Designed by <a rel="nofollow" href="https://www.facebook.com/joshi2409" target="_blank">Anubhav Joshi</a> | <a rel="nofollow" href="https://www.facebook.com/ashish" target="_blank">Ashish Bhuker</a>
+					</div>
+				</footer>
+<!-- / footer-->
+			</div>
+		</div>
+		<script type="text/javascript"> Cufon.now(); </script>
+		<script>
+		$(window).load(function() {
+			$('.spinner').fadeOut();
+			$('body').css({overflow:'inherit'});
+		})
+		</script>
+		<script>
+			function show(){
+				id=document.getElementById('page_Portfolio');
+				id.style.display= "block";
+				id2=document.getElementById('page_Portfolio_class');
+				id2.style.height= '100%';
+				//alert(id);
+			}
+		</script>
+	</body>
+</html>

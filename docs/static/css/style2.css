@@ -1,0 +1,409 @@
+@font-face{
+	src:url(AGENCYB.TTF);
+	font-family:'agencyfb_b';
+}
+@font-face{
+	src:url(AGENCYR.TTF);
+	font-family:'agencyfb';
+}
+@font-face{
+	src:url(DIGIFAW.TTF);
+	font-family:'digiface';
+}
+@font-face{
+	src:url(CORBEL.TTF);
+	font-family:'Corbel';
+}
+body{
+	background:url(../images/welcome_bg.jpg) center  fixed no-repeat;
+	-webkit-background-size: cover;
+ 	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+input, select{
+outline: none;
+border:none;
+height:32px;
+width:420px;
+color: rgb(139,37,0);
+font-weight:250;
+font-size:17px;
+padding-left:110px;
+}
+#header{
+	width:900px;
+	height:200px;
+	margin:0 auto;
+}
+#header2
+{
+	width:340px;
+	height:75px;
+	margin:0 auto;
+}
+#footer {
+	z-index:1;
+	right:20px;
+	bottom:20px;
+	position:fixed;
+	color:white;
+	font-family:agencyfb;
+	font-size:22px;
+}
+#panel{
+	width:1300px;
+	height:200px;
+	margin:0 auto;
+	text-align:center;
+	font-size:30px;
+	color:white;
+}
+#form{
+	width:1000px;
+	height:500px;
+	background:white;
+	opacity:0.9;
+	margin:0 auto;
+	text-align:center;
+	font-family:agencyfb;
+	font-size:40px;
+	overflow:auto;
+	border-color:white;
+	border:solid;
+}
+#form span{
+	font-family:digiface;
+	font-size:40px;
+	color:#000;
+}
+#form .error{
+	color:#F00;
+	font-family:"Times New Roman", Times, serif;
+	font-size:15px;
+}
+#form .left{
+	width: 450px;
+	float: left;
+	text-align: center;
+}
+#form .left table{
+	margin-left: 70px;
+	font-size: 18px;
+	font-family:'Corbel';
+	text-transform: uppercase;
+}
+#form .right{
+	width: 450px;
+	float: right;
+	text-align: center;
+}
+.btn{
+	border: 1px solid #000;
+	background-color: #8B2500;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 3px #8B2500, inset 0 -5px 15px #006, 0 2px 1px black;
+	-o-box-shadow: inset 0 1px 3px #8B2500, inset 0 -5px 15px #006, 0 2px 1px black;
+	-webkit-box-shadow: inset 0 1px 3px #8B2500, inset 0 -5px 15px #006, 0 2px 1px black;
+	-moz-box-shadow: inset 0 1px 3px #8B2500, inset 0 -5px 15px #006, 0 2px 1px black;
+	color: #fff;
+	font-family:'agencyfb';
+	font-size:25px;
+	line-height:25px;
+	line-height:25px;
+	text-shadow: 0 1px 1px black;
+	padding: 5px 30px;
+	width:125px;
+	height:35px;
+}
+
+#form .tab{
+	margin:10px;
+	font-family:Corbel;
+}
+#edit_course{
+	position:absolute;
+	width:700px;
+	height:550px;
+	margin-top:-500px;
+	margin-left:300px;
+	z-index:10;
+	opacity:0.9;
+	background:#FFF;
+	border:solid;
+	border-color:#000;
+}
+#edit_course .head{
+	font-family:digiface;
+	font-size:40px;
+	color:#000;
+}
+#edit_course form{
+	text-align:center;
+	font-family:Corbel;
+	color:#000;
+	font-size:15px;
+}
+#add_course{
+	width:900px;
+	height:600px;
+	background:white;
+	opacity:0.9;
+	margin:0 auto;
+	text-align:center;
+	overflow:auto;
+	border-color:#000;
+	border:solid;
+}
+#add_course .head{
+	font-family:digiface;
+	font-size:40px;
+	color:#000;
+}
+#add_course form{
+	text-align:center;
+	font-family:Corbel;
+	color:#000;
+	font-size:15px;
+}
+#add_course .error{
+	color:#F00;
+	font-family:"Times New Roman", Times, serif;
+	font-size:15px;
+}
+#rooms{
+	width:900px;
+	height:600px;
+	background:white;
+	opacity:0.9;
+	margin:0 auto;
+	text-align:center;
+	overflow:auto;
+	border-color:#000;
+	border:solid;
+}
+#rooms .head{
+	font-family:digiface;
+	font-size:40px;
+	color:#000;
+}
+#rooms form{
+	text-align:center;
+	font-family:Corbel;
+	color:#000;
+	font-size:15px;
+}
+#rooms .error{
+	color:#F00;
+	font-family:"Times New Roman", Times, serif;
+	font-size:15px;
+}
+#rooms table{
+	font-family:Corbel;
+	text-align:center;
+	color:#000;
+	font-size:16px;
+}
+
+#profs{
+	width:900px;
+	height:600px;
+	background:white;
+	opacity:0.9;
+	margin:0 auto;
+	text-align:center;
+	overflow:auto;
+	border-color:#000;
+	border:solid;
+}
+#profs .head{
+	font-family:digiface;
+	font-size:40px;
+	color:#000;
+}
+#profs form{
+	text-align:center;
+	font-family:Corbel;
+	color:#000;
+	font-size:15px;
+}
+#profs .error{
+	color:#F00;
+	font-family:"Times New Roman", Times, serif;
+	font-size:15px;
+}
+#profs table{
+	font-family:Corbel;
+	margin:10px;
+	text-align:center;
+	color:#000;
+	font-size:16px;
+}
+#edit_prof{
+	position:absolute;
+	width:700px;
+	height:600px;
+	margin-top:-550px;
+	margin-left:300px;
+	z-index:10;
+	opacity:0.9;
+	background:#FFF;
+	border:solid;
+	border-color:#000;
+}
+#edit_prof .head{
+	font-family:digiface;
+	font-size:40px;
+	color:#000;
+}
+#edit_prof form{
+	text-align:center;
+	font-family:Corbel;
+	color:#000;
+	font-size:15px;
+}
+#edit_prof .error{
+	color:#F00;
+	font-family:"Times New Roman", Times, serif;
+	font-size:15px;
+}
+
+.hide{
+	visibility:hidden;
+}
+.unhide{
+	visibility:visible;
+}
+#templatemo_menu {
+	margin-top: 12px; 
+	margin-left:50px;
+	color:#FFF;
+	font-weight:700;
+	font-size:25px;
+	text-align:left;
+	}
+
+
+.ddsmoothmenu {
+}
+
+.ddsmoothmenu ul {
+	z-index:100;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+/*Top level list items*/
+.ddsmoothmenu ul li {
+	position: relative;
+	display: inline;
+	float: left;
+	width:200px;
+	background:#000;
+}
+
+/*Top level menu link items style*/
+.ddsmoothmenu ul li a {
+	display: block;
+	height: 35px;
+	width: 200px;
+	margin-left: 10px;
+	margin-top:10px;
+	line-height: 15px;
+	font-family:agencyfb;
+	font-size: 25px;
+	font-weight: bold;
+	text-align:center;
+	color: white;	
+	text-decoration: none;
+	outline: none;
+	}
+
+* html .ddsmoothmenu ul li a { /*IE6 hack to get sub menu links to behave correctly*/
+	display: inline-block;
+}
+
+.ddsmoothmenu ul li a.selected, .ddsmoothmenu ul li a:hover { /*CSS class that's dynamically added to the currently active menu items' LI A element*/
+	
+}
+
+/*1st sub level menu*/
+.ddsmoothmenu ul li ul {
+	position: absolute;
+	width: 200px;
+	margin: 3px 0 0 10px;
+	display: none; /*collapse all sub menus to begin with*/
+	visibility: hidden;
+	background:black
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.ddsmoothmenu ul li ul li {
+	display: list-item;
+	float: none;
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.ddsmoothmenu ul li ul li ul {
+	top: 0;
+	margin-left:40px;
+}
+
+/* Sub level menu links style */
+.ddsmoothmenu ul li ul li a {
+	font-weight: 500;
+	width: 200px; /*width of sub menus*/
+	margin: 0 3px 0 1px;
+	height: 28px;
+	line-height: 28px;
+	padding: 0 20px;
+	font-size: 20px;
+	text-align: center;
+	background:black;
+	color: #ccc;
+	border-bottom: 1px solid white
+}
+
+.ddsmoothmenu ul li ul li .last {
+	border-bottom: none;
+}
+
+.ddsmoothmenu ul li ul li a.selected, .ddsmoothmenu ul li ul li a:hover {
+	color:#FFF;
+	
+	width: 200px
+	font-size:21px;
+	padding-left: 21px;	
+}
+
+/* Holly Hack for IE \*/
+* html .ddsmoothmenu {height: 1%;} /*Holly Hack for IE7 and below*/
+
+/* ######### CSS classes applied to down and right arrow images  ######### */
+
+.downarrowclass {
+	position: absolute;
+	top: 12px;
+	right: 7px;
+}
+
+.rightarrowclass {
+	position: absolute;
+	top: 6px;
+	right: 5px;
+}
+
+/* ######### CSS for shadow added to sub menus  ######### */
+
+.ddshadow {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0;
+	height: 0;
+}
+
+.toplevelshadow { /*shadow opacity. Doesn't work in IE*/
+	opacity: 0.5;
+}

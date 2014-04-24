@@ -1,0 +1,1 @@
+To view docs, open index.html, present inside the html directory.

@@ -1,0 +1,312 @@
+<html>
+	<head>
+		<title>
+			CIS : Course Settings
+		</title>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style2.css" type="text/css" />
+		<script language="javascript" src="{{STATIC_URL}}js/menu.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ddsmoothmenu.js"></script>
+		
+		<script type="text/javascript">
+			ddsmoothmenu.init({
+			mainmenuid: "templatemo_menu", //menu DIV id
+			orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+			classname: 'ddsmoothmenu', //class added to menu's outer DIV
+			//customtheme: ["#1c5a80", "#18374a"],
+			contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+			})
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+        
+        $("#carousel").dualSlider({
+            auto:true,
+            autoDelay: 6000,
+            easingCarousel: "swing",
+            easingDetails: "easeOutBack",
+            durationCarousel: 1000,
+            durationDetails: 600
+        });
+        
+		});
+		</script>
+		<script type="text/javascript">
+			function validateDeletion(id)
+			{
+				if(confirm("Are you sure you want to remove the course "+id+" from the database?")== true)
+					return true;
+				else
+					return false;
+			}
+			function unhide(id,c_pid,c_id,c_name,c_l,c_t,c_p,c_c,c_sem,c_egn,c_ss,c_bn)
+			{
+				var form=document.getElementById('editing');
+				form.pid.value=c_id;
+				form.id.value=c_id;
+				form.name.value=c_name;
+				form.L.value=c_l;
+				form.T.value=c_t;
+				form.P.value=c_p;
+				form.C.value=c_c;
+				form.sem.value=c_sem;
+				form.egn.value=c_egn
+				form.ss.value=c_ss;
+				form.bn.value=c_bn;
+				var item=document.getElementById(id);
+				if(item)
+				{
+					item.className=(item.className=='hide')?'unhide':'hide';
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="header2">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl_2.png" alt="Central Information System"/>
+		</div>
+		<div id="panel">
+		{% if user.Username == "admin" %}
+			Welcome Admin
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">Edit/View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+                  	</ul>
+                </li>
+                <li><a href="#">Manage Professor</a>
+                    <ul>
+						<li><a href="/cis/prof/1/">Add Professor</a></li>
+                        <li><a href="/cis/prof/2/">View/Edit Professors</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Class Rooms</a>
+                    <ul>
+                        <li><a href="/cis/rooms/1/">Add Classroom</a></li>
+						<li><a href="/cis/rooms/2/">View/Remove Classroom</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Courses</a>
+                    <ul>
+                        <li><a href="/cis/courses/1/">Add Courses</a></li>
+                        <li><a href="/cis/courses/2/">Edit/View Courses</a></li>
+                  	</ul>
+                </li><li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+						<li><a href="/cis/prof_req/">Requests</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+			<br/>
+		{% else %}
+			Welcome {{user.Name}}
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login/">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+						</li>
+                  	</ul>
+                </li>
+                <li><a href="/cis/prof/2/">View Professors</a>
+                </li>
+				<li><a href="/cis/rooms/2/">View Classroom</a>
+				</li>
+                  	
+				<li><a href="/cis/courses/2/">View Courses</a>
+                </li>
+				<li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+                         <li><a href="/cis/prof_req/">Requests</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			<br/>
+			</div>
+		
+		{% endif %}
+		{% if page == 1 %}
+			{% if user.Username == "admin" %}
+				<div id="add_course">
+					<div class="head">Add Course<br/><br/></div>
+					{% if 'dup' in errors %}
+							<div class="error">{{errors.dup}}</div>
+						{% endif %}
+					<form action="" method="post">
+						{% csrf_token %}
+						
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course.png) center no-repeat; padding-left:165px" name="id" value="{{data.course_id}}" required="required" /><br/>
+						<br/>
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_2.png) center no-repeat; padding-left:165px" name="name" value="{{data.course_name}}" required="required" /><br/>
+	
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_8.png) center no-repeat; width:200px; padding-left:165px; padding-right:20px" name="L" value="{{data.lecture}}" style="max-width:10%;"  required="required" />
+						
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_9.png) center no-repeat; width:200px; padding-left:165px; padding-right:20px" name="T" value="{{data.tutorial}}" style="max-width:10%;" required="required" />
+						
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_10.png) center no-repeat; width:200px; padding-left:165px; padding-right:20px" name="P" value="{{data.practical}}" style="max-width:10%;" required="required" />
+						
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_11.png) center no-repeat; width:200px; padding-left:165px; padding-right:20px" name="C" value="{{data.credit}}" style="max-width:10%;" required="required" />
+						{% if 'L' in errors %}
+							<div class="error">{{errors.L}}</div>
+						{% endif %}
+						{% if 'T' in errors %}
+							<div class="error">{{errors.T}}</div>
+						{% endif %}
+						{% if 'P' in errors %}
+							<div class="error">{{errors.P}}</div>
+						{% endif %}
+						{% if 'C' in errors %}
+							<div class="error">{{errors.C}}</div>
+						{% endif %}<br/><br/>
+						
+						<select name="sem" style="background:url({{STATIC_URL}}images/courses_form/course_3.png) center no-repeat; padding-left:165px;"  required="required">
+							<option value="" >Select semester</option>
+							<option value="I">I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option>
+							<option value="V">V</option><option value="VI">VI</option><option value="VII">VII</option><option value="VIII">VIII</option>
+						</select><br/>
+						
+						<select name="prof" style="background:url({{STATIC_URL}}images/courses_form/course_7.png) center no-repeat; padding-left:165px;">
+							<option value="" >Select Professor</option>
+							{% for p in profs %}
+								<option value="{{p.Name}}">{{p.Name}}</option>
+							{% endfor %}
+						</select><br/>
+						
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_6.png) center no-repeat; padding-left:165px" value="{{data.elective_group_number}}" name="egn" required="required" />
+						{% if 'egn' in errors %}
+							<div class="error">{{errors.egn}}</div>
+						{% endif %}<br/>
+						
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_5.png) center no-repeat; padding-left:165px" value="{{data.students_strength}}" name="ss" required="required" />
+						{% if 'ss' in errors %}
+							<div class="error">{{errors.ss}}</div>
+						{% endif %}<br/>
+						
+						<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_4.png) center no-repeat; padding-left:165px" value="{{data.branch_number}}" name="bn" required="required" />
+						{% if 'bn' in errors %}
+							<div class="error">{{errors.bn}}</div>
+						{% endif %}<br/><br/><br/>
+						<input type="submit" class="btn" style="width:200px;" name="Add" value="Add Course" />
+					</form>
+				</div>
+			{% endif %}
+		{% else %}
+			<div id="form">
+				<span>Current Courses<br/></span>
+				<div class="tab">
+				<br/>
+				{% for e in errors.values %}
+					{% if e %}
+						<div class="error">{{e}}</div>
+					{% endif %}
+				{% endfor %}
+				<table align="center" rules="all" border="pixels">
+					<tr>
+					<td width="10%" align="center"><b>Course Id</b></td>
+					<td width="25%" align="center"><b>Course Name</b></td>
+					<td width="5%" align="center"><b>L</b></td>
+					<td width="5%" align="center"><b>T</b></td>
+					<td width="5%" align="center"><b>P</b></td>
+					<td width="5%" align="center"><b>C</b></td>
+					<td width="5%" align="center"><b>Semester</b></td>
+					<td width="5%" align="center"><b>Elective Group Number</b></td>
+					<td width="5% "align="center"><b>Student Strength</b></td>
+					<td width="5%" align="center"><b>Branch Number</b></td>
+					<td width="5%" align="center"><b>Professor taking the Course</b></td>
+					</tr>
+					{% for c in courses %}
+					<tr>
+						<td width="10%" align="center">{{c.course_id}}</td>
+						<td width="25%" align="center">{{c.course_name}}</td>
+						<td width="5%" align="center">{{c.lecture}}</td>
+						<td width="5%" align="center">{{c.tutorial}}</td>
+						<td width="5%" align="center">{{c.practical}}</td>
+						<td width="5%" align="center">{{c.credit}}</td>
+						<td width="5%" align="center">{{c.semester}}</td>
+						<td width="5%" align="center">{{c.elective_group_number}}</td>
+						<td width="5%" align="center">{{c.students_strength}}</td>
+						<td width="5%" align="center">{{c.branch_number}}</td>
+						<td width="5%" align="center">{{c.Teaching.all.0.Name}}</td>
+						{% if user.Username == "admin" %}
+						<td width="10%" align="center"><form><input type="button" class="btn" style="width:85px;;" value="Edit" name="Edit" onclick="unhide('edit_course','{{c.id}}','{{c.course_id}}','{{c.course_name}}', '{{c.lecture}}', '{{c.tutorial}}', '{{c.practical}}', '{{c.credit}}', '{{c.semester}}', '{{c.elective_group_number}}', '{{c.students_strength}}', '{{c.branch_number}}')" /></form></td>
+						<td width="10%" align="center"><form  action="" onsubmit="return validateDeletion(this.id.value);" method="post">{% csrf_token %}<input type="text" style="max-width:0%;" hidden="hidden" value="{{c.course_id}}" name="id" /><input type="submit" class="btn" style="max-width:90%;" value="Remove" name="Remove" /></form></td>
+						{% endif %}
+					</tr>
+						
+					{% endfor %}
+				</table>
+				</div>
+			</div>
+				<div id="edit_course" class="hide">
+						<a href="javascript:unhide('edit_course');"><img src="{{STATIC_URL}}images/close.png" alt="Close" align="right" width="30" height="15"/></a>
+						<div class="head">EDIT COURSE</div>
+						<br/>
+						<form action="/cis/courses/2/" method="post" id="editing">
+							{% csrf_token %}
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course.png) center no-repeat; padding-left:165px" name="id" required="required" /><br/>
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_2.png) center no-repeat; padding-left:165px" name="name" required="required" /><br/>
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_8.png) center no-repeat; width:200px; padding-left:165px; padding-right:20px" name="L" style="max-width:10%;"  required="required" />
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_9.png) center no-repeat; width:200px; padding-left:165px; padding-right:20px" name="T" style="max-width:10%;" required="required" />
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_10.png) center no-repeat; width:200px; padding-left:165px; padding-right:20px" name="P" style="max-width:10%;" required="required" />
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_11.png) center no-repeat; width:200px; padding-left:165px; padding-right:20px" name="C" style="max-width:10%;" required="required" /><br/>
+							
+							<select name="sem" style="background:url({{STATIC_URL}}images/courses_form/course_3.png) center no-repeat; padding-left:165px;" required="required">
+								<option value="I">I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option>
+								<option value="V">V</option><option value="VI">VI</option><option value="VII">VII</option><option value="VIII">VIII</option>
+							</select><br/>
+							
+							<select name="prof" style="background:url({{STATIC_URL}}images/courses_form/course_7.png) center no-repeat; padding-left:165px;" >
+							<option value="" >Select Professor</option>
+							{% for p in profs %}
+								<option value="{{p.Name}}">{{p.Name}}</option>
+							{% endfor %}
+							</select><br/>
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_6.png) center no-repeat; padding-left:165px" name="egn" required="required" /><br/>
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_5.png) center no-repeat; padding-left:165px" name="ss" required="required" /><br/>
+							
+							<input type="text" style="background:url({{STATIC_URL}}images/courses_form/course_4.png) center no-repeat; padding-left:165px" name="bn" required="required" /><br/>
+							<input type="text" name="pid" required="required" hidden="hidden"/><br/><br/>
+							<input type="submit" class="btn" name="Save" value="Save" />
+						</form>
+				</div>
+		{% endif %}
+		</div>
+	</body>
+</html>

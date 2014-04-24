@@ -1,0 +1,138 @@
+<html>
+	<head>
+		<title>
+			CIS : Welcome Page
+		</title>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style_home.css" type="text/css" />
+		<script language="javascript" src="{{STATIC_URL}}js/menu.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ddsmoothmenu.js"></script>
+		
+		<script type="text/javascript">
+			ddsmoothmenu.init({
+			mainmenuid: "templatemo_menu", //menu DIV id
+			orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+			classname: 'ddsmoothmenu', //class added to menu's outer DIV
+			//customtheme: ["#1c5a80", "#18374a"],
+			contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+			})
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+        
+        $("#carousel").dualSlider({
+            auto:true,
+            autoDelay: 6000,
+            easingCarousel: "swing",
+            easingDetails: "easeOutBack",
+            durationCarousel: 1000,
+            durationDetails: 600
+        });
+        
+		});
+		</script>
+		<style type="text/css">
+			#msg{
+				font-size:15px;
+				font-family:Arial;
+				color:white;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="header">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl.png" alt="Central Information System"/>
+		</div>
+		<div id="panel">
+		{% if user.Username == "admin" %}
+			Welcome Admin
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login/">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">Edit/View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+                  	</ul>
+                </li>
+                <li><a href="#">Manage Professor</a>
+                    <ul>
+						<li><a href="/cis/prof/1/">Add Professor</a></li>
+                        <li><a href="/cis/prof/2/">View/Edit Professors</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Class Rooms</a>
+                    <ul>
+                        <li><a href="/cis/rooms/1/">Add Classroom</a></li>
+						<li><a href="/cis/rooms/2/">View/Remove Classroom</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Manage Courses</a>
+                    <ul>
+                        <li><a href="/cis/courses/1/">Add Courses</a></li>
+                        <li><a href="/cis/courses/2/">Edit/View Courses</a></li>
+                  	</ul>
+                </li><li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+						<li><a>Requests</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+		{% else %}
+			Welcome {{user.Name}}
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/login/">Home</a>
+                </li>
+                <li><a href="#">Manage Time Table</a>
+                    <ul>
+                        <li><a href="#">View Existing Time Table</a>
+							<ul>
+								<li><a href="/cis/tt1/">1st Year</a></li>
+								<li><a href="/cis/tt2/">2nd Year</a></li>
+								<li><a href="/cis/tt3/">3rd Year</a></li>
+								<li><a href="/cis/tt4/">4th Year</a></li>
+							</ul>
+						</li>
+						<li><a href="/cis/mytt/">View My Time Table</a>
+						</li>
+                  	</ul>
+                </li>
+                <li><a href="/cis/prof/2/">View Professors</a>
+                </li>
+				<li><a href="/cis/rooms/2/">View Classroom</a>
+				</li>
+                  	
+				<li><a href="/cis/courses/2/">View Courses</a>
+                </li>
+				<li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/settings/">Account Settings</a></li>
+						<li><a href="/cis/home">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+		{% endif %}
+		<div id="msg">{{message}}<br/></div>
+		</div>
+		<div id="footer">
+		Copyright &copy Indian Institute of Technology Patna
+		</div>
+	</body>
+</html>

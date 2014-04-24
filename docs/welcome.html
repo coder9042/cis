@@ -1,0 +1,258 @@
+<html>
+	<head>
+		<title>
+			CIS : Welcome Page
+		</title>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style_home.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/demo.css">
+        <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/style7.css">
+        <link href="{{STATIC_URL}}css/css" rel="stylesheet" type="text/css">
+		<script language="javascript" src="{{STATIC_URL}}js/menu.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ddsmoothmenu.js"></script>
+		<script type="text/javascript" async="" src="{{STATIC_URL}}js/ga.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/demoad.css"><script type="text/javascript" async="" src="./Creative CSS3 Animation Menus_files/pro.js"></script><script type="text/javascript" id="_bsaPRO_js" src="{{STATIC_URL}}js/saved_resource" async="async"></script><script type="text/javascript" async="" src="./Creative CSS3 Animation Menus_files/bsa.js"></script><script type="text/javascript" id="_bsap_js_af25dfd2f1908889af7a1aa5f4dcbd9e" src="{{STATIC_URL}}js/s_af25dfd2f1908889af7a1aa5f4dcbd9e.js" async="async"></script><style type="text/css" id="bsa_css">.one{position:relative}.one .bsa_it_ad{display:block;padding:15px;border:1px solid #e1e1e1;background:#f9f9f9;font-family:helvetica,arial,sans-serif;line-height:100%;position:relative}.one .bsa_it_ad a{text-decoration:none}.one .bsa_it_ad a:hover{text-decoration:none}.one .bsa_it_ad .bsa_it_t{display:block;font-size:12px;font-weight:bold;color:#212121;line-height:125%;padding:0 0 5px 0}.one .bsa_it_ad .bsa_it_d{display:block;font-size:11px;color:#434343;font-size:12px;line-height:135%}.one .bsa_it_ad .bsa_it_i{float:left;margin:0 15px 10px 0}.one .bsa_it_p{display:block;text-align:right;position:absolute;bottom:10px;right:15px}.one .bsa_it_p a{font-size:10px;color:#666;text-decoration:none}.one .bsa_it_ad .bsa_it_p a:hover{font-style:italic}</style>
+		
+		<script type="text/javascript">
+			ddsmoothmenu.init({
+			mainmenuid: "templatemo_menu", //menu DIV id
+			orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+			classname: 'ddsmoothmenu', //class added to menu's outer DIV
+			//customtheme: ["#1c5a80", "#18374a"],
+			contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+			})
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+        
+        $("#carousel").dualSlider({
+            auto:true,
+            autoDelay: 6000,
+            easingCarousel: "swing",
+            easingDetails: "easeOutBack",
+            durationCarousel: 1000,
+            durationDetails: 600
+        });
+        
+		});
+		</script>
+		<style type="text/css">
+			#msg{
+				font-size:15px;
+				font-family:Arial;
+				color:white;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="header">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl.png" alt="Central Information System"/>
+		</div>
+		<div class="container">
+		{% if user.Username == "admin" %}
+			<div id="home_header">Admin</div>
+            <div class="content">
+                <ul class="ca-menu">
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Manage<br/>Timetable</h2>
+								<img src="{{STATIC_URL}}images/schedule.png" style="margin-left: 25px; margin-top: 40px;" width="150" height="150" />
+                                <div class="submenu">
+								<h3 class="ca-sub">
+									<a style="text-align:center" href="#">Edit/View Time Table</a>
+									<div class ="submenu2">
+									<a style="text-align:center" href="/cis/tt1/">1st Year</a>
+									<a style="text-align:center" href="/cis/tt2/">2nd Year</a>
+									<a style="text-align:center" href="/cis/tt3/">3rd Year</a>
+									<a style="text-align:center" href="/cis/tt4/">4th Year</a>
+									</div>
+									<a style="text-align:center" href="/cis/mytt/">View My Time Table</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Manage<br/>Professors</h2>
+								<img src="{{STATIC_URL}}images/prof.png" style="margin-left: 25px; margin-top: 30px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/prof/1/">Add Professor</a>
+									<a style="text-align:center" href="/cis/prof/2/">View/Edit Professors</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Manage<br/>Rooms</h2>
+								
+								<img src="{{STATIC_URL}}images/rooms.png" style="margin-left:20px; margin-top: 30px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/rooms/1/">Add Classroom</a>
+									<a style="text-align:center" href="/cis/rooms/2/">View/Remove Classroom</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Manage<br/>Courses</h2>
+								<img src="{{STATIC_URL}}images/courses.png" style="margin-left: 25px; margin-top: 30px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/courses/1/">Add Courses</a>
+									<a style="text-align:center" href="/cis/courses/2/">Edit/View Courses</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Options<br/></h2>
+								<img src="{{STATIC_URL}}images/settings.png" style="margin-left: 25px; margin-top: 80px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/settings/">Account Settings</a>
+									<a style="text-align:center" href="/cis/prof_req/">Requests</a>
+									<a style="text-align:center" href="/cis/home">Logout</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                </ul>
+            </div><!-- content -->
+            {% endif %}
+		{% if isstud == '1' %}
+			<div class="container">
+			<div id="home_header">Welcome {{user.Name}}</div>
+            <div class="content2">
+                <ul class="ca-menu">
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">View<br/>Timetable</h2>
+								<img src="{{STATIC_URL}}images/schedule.png" style="margin-left: 25px; margin-top: 40px;" width="150" height="150" />
+                                <div class="submenu">
+								<h3 class="ca-sub">
+									<a style="text-align:center" href="#">View Time Table</a>
+									<div class ="submenu2">
+									<a style="text-align:center" href="/cis/tt1/{{batch}}/{{isstud}}">1st Year</a>
+									<a style="text-align:center" href="/cis/tt2/{{isstud}}">2nd Year</a>
+									<a style="text-align:center" href="/cis/tt3/{{isstud}}">3rd Year</a>
+									<a style="text-align:center" href="/cis/tt4/{{isstud}}">4th Year</a>
+									</div>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Make<br/>Appointments</h2>
+								<img src="{{STATIC_URL}}images/appointment.png" style="margin-left: 25px; margin-top: 30px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/Appoint/1/">Make Appointments</a>
+									<a style="text-align:center" href="/cis/Appoint/2/">View Appointments</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Options<br/></h2>
+								<img src="{{STATIC_URL}}images/settings.png" style="margin-left: 25px; margin-top: 80px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/pass">Change Password</a>
+									<a style="text-align:center" href="/cis/home">Logout</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                </ul>
+            </div><!-- content -->
+		</div>
+		{% endif %}
+		{% if user.Username != 'admin' and isstud != '1' %}
+			<div id="home_header">{{user.Name}}</div>
+            <div class="content">
+                <ul class="ca-menu">
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Manage<br/>Timetable</h2>
+								<img src="{{STATIC_URL}}images/schedule.png" style="margin-left: 25px; margin-top: 40px;" width="150" height="150" />
+                                <div class="submenu">
+								<h3 class="ca-sub">
+									<a style="text-align:center" href="#">View Time Table</a>
+									<div class ="submenu2">
+									<a style="text-align:center" href="/cis/tt1/">1st Year</a>
+									<a style="text-align:center" href="/cis/tt2/">2nd Year</a>
+									<a style="text-align:center" href="/cis/tt3/">3rd Year</a>
+									<a style="text-align:center" href="/cis/tt4/">4th Year</a>
+									</div>
+									<a style="text-align:center" href="/cis/mytt/">View My Time Table</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">View<br/>Professors</h2>
+								<img src="{{STATIC_URL}}images/prof.png" style="margin-left: 25px; margin-top: 30px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/prof/2/">View Professors</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">View<br/>Rooms</h2>
+								
+								<img src="{{STATIC_URL}}images/rooms.png" style="margin-left:20px; margin-top: 30px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/rooms/2/">View Classroom</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">View<br/>Courses</h2>
+								<img src="{{STATIC_URL}}images/courses.png" style="margin-left: 25px; margin-top: 30px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/courses/2/">View Courses</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                    <li>
+                            <div class="ca-content">
+                                <h2 class="ca-main">Options<br/></h2>
+								<img src="{{STATIC_URL}}images/settings.png" style="margin-left: 25px; margin-top: 80px;" width="150" height="150" />
+								<div class="submenu">
+                                <h3 class="ca-sub">
+									<a style="text-align:center" href="/cis/settings/">Account Settings</a>
+									<a style="text-align:center" href="/cis/prof_req/">Requests</a>
+									<a style="text-align:center" href="/cis/home">Logout</a>
+								</h3>
+								</div>
+                            </div>
+                    </li>
+                </ul>
+            </div><!-- content -->
+		{% endif %}
+		</div>
+		<div id="footer">
+		Copyright &copy Indian Institute of Technology Patna
+		</div>
+		</div>
+	</body>
+</html>

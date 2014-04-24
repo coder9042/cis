@@ -1,0 +1,450 @@
+<html>
+	<head>
+		<title>
+			CIS:Time Table
+		</title>
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/tt.css" />
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript">
+			function unhide(id,day,slot,cid,rid,prof,extra)
+			{
+				item=document.getElementById(id);
+				//alert(""+id);
+				if(item)
+				{
+					item.className=(item.className=='hide')?'unhide':'hide';
+				}
+				form=document.getElementById('edit');
+				form.heading.value=day+":"+slot;
+				form2=document.getElementById('auto_form');
+				form2.heading.value=day;
+				form2=document.getElementById('auto_form1');
+				form2.heading.value=day;
+				form3=document.getElementById('delSlot');
+				form3.heading.value=day+":"+slot;
+				form3.courseid.value=cid;
+				form3.roomid.value=rid;
+				form3.prof.value=prof;
+				form3.extra.value=extra;
+				form4=document.getElementById('prof_req');
+				form4.heading.value=day+":"+slot;
+			}
+			function setHover(s,cid,cnm,rid,pid,day,slot,cid,extra)
+			{
+				d=document.getElementById(s);
+				htmlstr='<a style="z-index:110;" href="javascript: unhide(';
+				htmlstr+="'delete','";
+				htmlstr+=''+day;
+				htmlstr+="','";
+				htmlstr+=''+slot;
+				htmlstr+="','";
+				htmlstr+=''+cid;
+				htmlstr+="','";
+				htmlstr+=''+rid;
+				htmlstr+="','";
+				htmlstr+=''+pid;
+				htmlstr+="','";
+				htmlstr+=''+extra;
+				htmlstr+="'"
+				htmlstr+=');" >Delete</a>';
+				//alert(htmlstr);
+				var l=create(htmlstr);
+				if(extra != 'None'){
+					d.innerHTML += extra+"<br/>"+rid+"<br/>"+pid+"<br/>";
+				}
+				else{
+					d.innerHTML += cid+" : "+cnm+"<br/>"+rid+"<br/>"+pid+"<br/>";
+				}
+				d.appendChild(l);  
+				d.innerHTML+="<br/><br/>";
+			}
+			function setHover2(s,cid,cnm,rid,pid,day,slot,cid)
+			{
+				d=document.getElementById(s);
+				//alert(htmlstr);
+				d.innerHTML += cid+" : "+cnm+"<br/>"+rid+"<br/>"+pid+"<br/>";
+				//d.appendChild(l);  
+				d.innerHTML+="<br/><br/>";
+			}
+			function create(htmlStr) {
+				var frag = document.createDocumentFragment(),
+				temp = document.createElement('div');
+				temp.innerHTML = htmlStr;
+				while (temp.firstChild) {
+					frag.appendChild(temp.firstChild);
+				}
+				return frag;
+			}
+			function removeDiv(id)
+			{
+				d=document.getElementById(id);
+				var data = d.innerHTML;
+				//alert(data.length);
+				if (data.length == 4)
+				{	
+					//alert("True");
+					d.parentNode.removeChild(d);
+				}
+			}
+			function removeFilter(id)
+			{
+				d=document.getElementById(id);
+				d.style.display = "none";
+			}
+		</script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$('#filter-option').change(function(){
+				var location = $(this).val(),
+				div = $('#' + location);
+				div.show();
+
+				});
+			});
+		</script>
+	</head>
+	<body bgcolor="black">
+		<div id="header2">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl_2.png" alt="Central Information System"/>
+		</div>
+		
+		<div id="timetable">
+		
+		<div class="sidelink">
+			<a href="/cis/login/{{isstud}}">HOME</a>{% if user.Username == 'admin' %} &nbsp&nbsp&nbsp&nbsp&nbsp <a href="javascript:unhide('autogen','{{yr}}');">AUTO GENERATE</a> &nbsp&nbsp&nbsp&nbsp&nbsp
+			<a href="/cis/clear/{{yr}}/">CLEAR ALL</a>&nbsp&nbsp&nbsp&nbsp&nbsp{% else %} &nbsp&nbsp&nbsp&nbsp&nbsp {% endif %}<a href="javascript:unhide('filter');">FILTER</a>
+		</div>
+		<div class="sidelink2">
+			<a href="javascript:unhide('flip');">Ist Year</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+			<a href="/cis/tt2/{{isstud}}">2nd Year</a>&nbsp&nbsp&nbsp&nbsp&nbsp <a href="/cis/tt3/{{isstud}}">3rd Year</a>&nbsp&nbsp&nbsp&nbsp&nbsp <a href="/cis/tt4/{{isstud}}">4th Year</a>
+		</div>
+			<div class="cell_header"><br/><b>TIME SLOTS<br/>DAYS</b></div>
+			{% for s in slots.values %}
+				<div class="cell_header"><br/><br/><b>{{s}}</b></div>
+			{% endfor %}
+			{% for d in days.values %}
+				<div class="cell_header"><br/><br/><b>{{d}}</b></div>
+				{% for s in slots.keys %}
+					<div class="cell" onclick="unhide('popup','{{d}}','{{s}}');" >
+					<div id="info{{d}}{{s}}" class="info"><br/></div>
+					{% for t in table %}
+						{% if d.lower == t.Cell.day %}
+							{% if s == t.Cell.slot %}
+								<font color="#390">{{t.Course.course_id}}
+								{% if t.Extra != None %}
+									{{t.Extra}}
+								{% else %}
+									{% if t.isTutorial == 1 %}
+										(T)
+									{% elif t.Room.isLab == True %}
+										(P)
+									{% else %}
+										(L)
+									{% endif %}
+								{% endif %}</font>
+								<br/>
+								<font color="#600">{{t.Room.room_id}}</font><br/>
+								{% if t.Link != None %}
+									<a class="link" href="http://{{t.Link}}" target="_blank">Link</a>
+								{% endif %}
+								{% if t.Date != None %}
+									<font color="black">{{t.Date}}</font><br/>
+								{% endif %}
+								{% if user.Username == 'admin' %}
+								<script type="text/javascript">
+								setHover('info{{d}}{{s}}','{{t.Course.course_id}}','{{t.Course.course_name}}','{{t.Room.room_id}}','{{t.Course.Teaching.all.0.Name}}','{{d}}','{{s}}','{{t.Course.course_id}}','{{t.Extra}}');
+								</script>
+								{% else %}
+								<script type="text/javascript">
+								setHover2('info{{d}}{{s}}','{{t.Course.course_id}}','{{t.Course.course_name}}','{{t.Room.room_id}}','{{t.Course.Teaching.all.0.Name}}','{{d}}','{{s}}','{{t.Course.course_id}}');
+								</script>
+								{% endif %}
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+					</div>
+					<script type="text/javascript">
+						removeDiv('info{{d}}{{s}}');
+					</script>
+				{% endfor %}
+			{% endfor %}
+		<div id="delete" class="hide">
+		<a href="/cis/{{tt_name}}"><img src="{{STATIC_URL}}images/cross.png" alt="Close" align="right" width="25" height="25"/></a><br/>
+			<form action="/cis/tt{{yr}}/" method="post" id="delSlot">
+				{% csrf_token %}
+				Day:Period<br/>
+				<textarea name="heading" style="resize:none; max-width:30%;" readonly>{{T.Cell.day}}:{{T.Cell.slot}}</textarea><br/><br/>
+				<input type="text" style="background:none; text-align:center; min-width:100%; border:none;" name="courseid" readonly /><br/>
+				<input type="text" style="background:none; text-align:center; min-width:100%; border:none;" name="extra" readonly /><br/>
+				<input type="text" style="background:none; text-align:center; min-width:100%; border:none;" name="roomid" readonly /><br/>
+				<input type="text" style="background:none; text-align:center; min-width:100%; border:none;" name="prof" readonly /><br/><br/>
+				Are you sure you want to<br/>delete the above from the current timetable slot ?
+				<br/><br/>
+				<input type="submit" value="Confirm" name="Clear"/>
+			</form>
+		</div>
+		{% if isstud != '1' %}}
+		{% if error %}
+		<div id="popup2" class="unhide">
+		<a href="/cis/{{tt_name}}"><img src="{{STATIC_URL}}images/cross.png" alt="Close" align="right" width="25" height="25"/></a><br/>
+		{% else %}
+		<div id="popup" class="hide">
+		<a href="javascript:unhide('popup');"><img src="{{STATIC_URL}}images/cross.png" alt="Close" align="right" width="25" height="25"/></a>
+		{% endif %}
+			{% if error %}
+				<div class="error">
+				Cannot assign this to this cell.<br/>
+				{% if error == 'Room not sufficient.' %}
+					{{error}}<br/></div>
+				{% elif error == 'Please check the date you have entered.' %}
+					{{error}}<br/></div>
+				{% elif error == 'This date cannot be given' %}
+					{{error}}<br/></div>
+				{% elif error == "You have to atleast give tomorrow's date." %}
+					{{error}}<br/></div>
+				{% else %}
+					{{error.Course.course_id}}<br/>
+					{{error.Course.Teaching.all.0.Name}}<br/>
+					{{error.Room.room_id}}<br/>
+					{% if error.Extre != None%}
+						{{error.Extra}}<br/>
+					{% endif %}
+					{{error.Link}}</div>
+				{% endif %}
+			{% endif %}
+			<form action="/cis/tt{{yr}}/" method="post" id="edit">
+				{% csrf_token %}
+				Day:Period<br/>
+				<textarea name="heading" style="resize:none; max-width:30%;" readonly>{{T.Cell.day}}:{{T.Cell.slot}}</textarea><br/><br/>
+				Activity<br/>
+				<select name="courses" required="required">
+					{% for c in courses1 %}
+						<option style="border:none;" value="{{c.course_id}}">{{c.course_id}}:{{c.course_name}}</option>
+					{% endfor %}
+					<option style="border:none;" value="">-----------------------------</option>
+					{% for c in courses2 %}
+						<option style="border:none;" value="{{c.course_id}}">{{c.course_id}}:{{c.course_name}}</option>
+					{% endfor %}
+					<option style="border:none;" value="other">Other</option>
+				</select><br/>
+				Is it tutorial?
+				Yes<input type="radio" name="tut" value="yes"/> &nbsp&nbsp No<input type="radio" name="tut" value="no"/><br/>
+				<textarea name="other" style="resize:none;" placeholder="Title of the other activity here."></textarea><br/><br/>
+				Select the following carefully if you have selected Other:<br/>
+				Day: 
+				<select name="day">
+					{% for d in dates %}
+						<option style="border:none;" value="{{d}}">{{d}}</option>
+					{% endfor %}
+				</select>
+				Month:
+				<select name="month">
+					{% for m in months %}
+						<option style="border:none;" value="{{m}}">{{m}}</option>
+					{% endfor %}
+				</select>
+				Hour
+				<select name="hour">
+					{% for h in hours %}
+						<option style="border:none;" value="{{h}}">{{h}}</option>
+					{% endfor %}
+				</select>
+				Min
+				<select name="minute">
+					{% for m in minutes %}
+						<option style="border:none;" value="{{m}}">{{m}}</option>
+					{% endfor %}
+				</select><br/><br/>
+				Links<br/>
+				<textarea name="link" style="resize:none;" placeholder="Relevant Links(if any)"></textarea><br/><br/>
+				Room<br/>
+				<select name="rooms" required="required">
+					{% for r in rooms %}
+						<option style="border:none;" value="{{r.room_id}}">{{r.room_id}}:{{r.room_strength}} students</option>
+					{% endfor %}
+				</select><br/><br/>
+				{% if user.Username == "admin" %}
+					<input type="submit" class="btn" value="Save" name="Manual"/>
+				{% else %}
+					<input type="submit" class="btn" value="Request Admin" name="Manual"/>
+				{% endif %}<br/>
+			</form>
+		</div>
+		{% endif %}
+			<div id="autogen" class="hide">
+				<form id="auto_form" action="/cis/autogen_tt/{{yr}}/" method="post" align="center">
+				{% csrf_token %}
+				<br/>
+				<b>AUTO GENERATE TIMETABLE</b><br/><br/>
+				<input type="text" name="heading" style="resize:none; max-width:1.4%; border:none; padding-top:2px; background:none" rows="1" cols="1" readonly />
+				{% if yr == 1 %}
+					st year
+				{% elif yr == 2 %}
+					nd year
+				{% elif yr == 3 %}
+					rd year
+				{% else %}
+					th year
+				{% endif %}<br/>
+				Select Semester:<br/>
+				Odd:<input type="radio" name="sem" value="odd" required="required" /><br/>
+				Even:<input type="radio" name="sem" value="even" required="required" /><br/><br/>
+				<input type="submit" class="btn" name="generate" value="Generate"/> &nbsp&nbsp <input class="btn" type="button" name="cancel" value="Cancel" onclick="unhide('autogen');"/>
+				</form>
+			</div>
+			<div id="filter" class="hide">
+				<a href="javascript:unhide('filter');"><img src="{{STATIC_URL}}images/cross.png" alt="Close" align="right" width="25" height="25"/></a>
+				<form action="/cis/filter/{{yr}}/{{batch}}/{{isstud}}" method="post">
+				{% csrf_token %}
+				<br/><br/>
+				<b>Filter The TimeTable View</b><br/><br/>
+				<div id="Professor" style="display:none;">
+				<b>Professor:</b><br/>
+				{% for p in options.Professor %}
+					{{p}}<input name="{{p}}" type="checkbox" value="{{p}}" />
+				{% endfor %}
+				<br/>
+				<a href="javascript: removeFilter('Professor');">Remove</a>
+				<br/><br/>
+				</div>
+				<div id="Branch" style="display:none;">
+				<b>Branch:</b><br/>
+				{% for p in options.Branch %}
+					{{p}}<input name="{{p}}" type="checkbox" value="{{p}}" />
+				{% endfor %}
+				<br/>
+				<a href="javascript: removeFilter('Branch');">Remove</a>
+				<br/><br/>
+				</div>
+				<div id="Rooms" style="display:none;">
+				<b>Rooms:</b><br/>
+				{% for p in options.Rooms %}
+					{{p}}<input name="{{p}}" type="checkbox" value="{{p}}" />
+				{% endfor %}
+				<br/>
+				<a href="javascript: removeFilter('Rooms');">Remove</a>
+				<br/><br/>
+				</div>
+				<div id="Course" style="display:none;">
+				<b>Course:</b><br/>
+				{% for p in options.Course %}
+					{{p}}<input name="{{p}}" type="checkbox" value="{{p}}" />
+				{% endfor %}
+				<br/>
+				<a href="javascript: removeFilter('Course');">Remove</a>
+				<br/><br/>
+				</div>
+				<br/><br/>
+				FILTER: <br/>
+				<select id="filter-option">
+					<option></option>
+					{% for opt in options %}
+					<option value="{{opt}}">{{opt}}</option>
+					{% endfor %}
+				</select><br/><br/>
+				<input type="submit" class="btn" name="filter" value="Filter" />
+				</form>
+			</div>
+			<div id="flip" class="hide">
+				<form id="auto_form1" action="/cis/tt1/{{batch}}/{{isstud}}/" method="post" align="center">
+				{% csrf_token %}
+				<br/>
+				<b>SELECT BATCH</b><br/><br/>
+				<input type="text" name="heading" style="resize:none; max-width:1.4%; border:none; padding-top:2px; background:none" rows="1" cols="1" readonly />
+				1st Batch:<input type="radio" name="batch" value="0" required="required" /><br/>
+				2nd Batch:<input type="radio" name="batch" value="1" required="required" /><br/><br/>
+				<input type="submit" name="select" value="Select"/> &nbsp&nbsp <input type="button" name="cancel" value="Cancel" onclick="unhide('flip');"/>
+				</form>
+			</div>
+		{% if user.Username == "admin" %}
+			<div id="sidepane">
+				<div class="up">
+				<h2>Odd Semester</h2>
+				<table border="pixels" style="margin-left:25px; float:left;">
+					<tr>
+						<td><b>Course</b></td>
+						<td><b>[L, T, P]</b></td>
+					</tr>
+					{% for c in courses1 %}
+					<tr>
+						<td>{{c.course_id}}</td>
+						<td>[{{c.lecture}}, {{c.tutorial}}, {{c.practical}}]</</td>
+					{% endfor %}
+					</tr>
+				</table>
+				<table border="pixels" style="float:left">
+					<tr>
+						<td><b>Assigned</b></td>
+					</tr>
+						{% for c in count1 %}
+						<tr>
+							<td>{{c}}</td>
+						</tr>
+						{% endfor %}
+				</table>
+				<table border="pixels" style="float:left">
+					<tr>
+						<td><b>Status</b></td>
+					</tr>
+						{% for d in done1 %}
+							<tr>
+								<td>
+								{% if d == "1" %}
+									<img src="{{STATIC_URL}}images/tick.png" width="22" height="22" />
+								{% else %}
+									<img src="{{STATIC_URL}}images/cross.png" width="22" height="22" />
+								{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+				</table>
+				</div>
+				<div class="handle">
+					C<br/>O<br/>U<br/>R<br/>S<br/>E<br/>S
+				</div>
+				<div class="down">
+				<h2>Even Semester</h2>
+					<table border="pixels" style="margin-left:25px; float:left;">
+					<tr>
+						<td><b>Course</b></td>
+						<td><b>[L, T, P]</b></td>
+					</tr>
+					{% for c in courses2 %}
+					<tr>
+						<td>{{c.course_id}}</td>
+						<td>[{{c.lecture}}, {{c.tutorial}}, {{c.practical}}]</</td>
+					{% endfor %}
+					</tr>
+				</table>
+				<table border="pixels" style="float:left">
+					<tr>
+						<td><b>Assigned</b></td>
+					</tr>
+						{% for c in count2 %}
+						<tr>
+							<td>{{c}}</td>
+						</tr>
+						{% endfor %}
+				</table>
+				<table border="pixels" style="float:left">
+					<tr>
+						<td><b>Status</b></td>
+					</tr>
+						{% for d in done2 %}
+							<tr>
+								<td>
+								{% if d == "1" %}
+									<img src="{{STATIC_URL}}images/tick.png" width="22" height="22" />
+								{% else %}
+									<img src="{{STATIC_URL}}images/cross.png" width="22" height="22" />
+								{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+				</table>
+				</div>
+			</div>
+		{% endif %}
+		</div>
+	</body>
+</html>

@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title>
+			CIS : Change Password
+		</title>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style3.css" type="text/css" />
+		<script language="javascript" src="{{STATIC_URL}}js/menu.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ddsmoothmenu.js"></script>
+		
+		<script type="text/javascript">
+			ddsmoothmenu.init({
+			mainmenuid: "templatemo_menu", //menu DIV id
+			orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+			classname: 'ddsmoothmenu', //class added to menu's outer DIV
+			//customtheme: ["#1c5a80", "#18374a"],
+			contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+			})
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+        
+        $("#carousel").dualSlider({
+            auto:true,
+            autoDelay: 6000,
+            easingCarousel: "swing",
+            easingDetails: "easeOutBack",
+            durationCarousel: 1000,
+            durationDetails: 600
+        });
+        
+		});
+		</script>
+	</head>
+	<body>
+		<div id="header2">
+			<img src="{{STATIC_URL}}images/welcome_bg_incl_2.png" alt="Central Information System"/>
+		</div>
+		<div id="panel">
+			Welcome {{user.Username}}
+			<div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/cis/studlogin">Home</a>
+                </li>
+                <li><a href="#">Time Table</a>
+					<ul>
+						<li><a href="/cis/tt1/">1st Year</a></li>
+						<li><a href="/cis/tt2/">2nd Year</a></li>
+						<li><a href="/cis/tt3/">3rd Year</a></li>
+						<li><a href="/cis/tt4/">4th Year</a></li>
+					</ul>
+				</li>
+                <li><a href="#">Appointments</a>
+                    <ul>
+						<li><a href="/cis/Appoint/1/">Make Appointments</a></li>
+                        <li><a href="/cis/Appoint/2/">View Appointments</a></li>
+                  	</ul>
+                </li>
+				<li><a href="#">Options</a>
+                    <ul>
+                        <li><a href="/cis/pass/">Change Password</a></li>
+						<li><a href="/cis/studhome/">Logout</a></li>
+                  	</ul>
+                </li>
+            </ul>
+            <br style="clear: left" />
+			</div>
+		</div>
+		<div id="rooms">
+					<div class="head">Change Password</div><br/>
+					<form action="" method="post">
+						{% csrf_token %}
+						Current Password<br/>
+						<input type="password" value="" name="currpass" required="required" /><br/>
+						{% if 'currpass' in errors %}
+							<div class="error">{{errors.currpass}}</div>
+						{% endif %}<br/>
+						New Password<br/>
+						<input type="password" value="" name="newpass1" required="required" /><br/>
+						Retype New Password<br/>
+						<input type="password" value="" name="newpass2" required="required" /><br/>
+						{% if 'newpass' in errors %}
+							<div class="error">{{errors.newpass}}</div>
+						{% endif %}<br/>
+						<input type="submit" name="" value="Change Password" />
+					</form>
+				</div>
+	</body>
+</html>
